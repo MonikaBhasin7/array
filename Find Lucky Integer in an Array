@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int findLucky(vector<int>& arr) {
+      int i,j;
+      
+      map<int,int>mapy;
+      for(i=0;i<arr.size();i++)
+      {
+        mapy[arr[i]]=mapy[arr[i]]+1;
+      }
+      int result=-1;
+      for(auto k:mapy)
+      {
+        if(k.first==k.second)
+        {
+          result=max(result,k.first);
+        }
+      }
+      if(result==-1) return -1;
+      return result;
+        
+    }
+};
