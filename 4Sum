@@ -1,0 +1,64 @@
+/*Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+
+Note:
+
+The solution set must not contain duplicate quadruplets.
+
+Example:
+
+Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]*/
+
+
+class Solution {
+public:
+    typedef pair<int,int>P;
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+      int i,j;
+      
+      map<int,vector<P>>mapy;
+      set<vector<int>>sety;
+      vector<vector<int>>out;
+      if(nums.size()<4) return out;
+      for(i=0;i<nums.size()-1;i++)
+      {
+        for(j=i+1;j<nums.size();j++)
+        {
+          int rem=target-(nums[i]+nums[j]);
+          auto it=mapy.find(rem);
+          if(it!=mapy.end())
+          {
+            for(auto p:mapy.find(rem)->second)
+            {
+              int a=p.first;
+              int b=p.second;
+            
+              if(i!=a && j!=a && b!=i && b!=j)
+              {
+                vector<int>v;
+                v.push_back(nums[i]);
+                v.push_back(nums[j]);
+                v.push_back(nums[a]);
+                v.push_back(nums[b]);
+                sort(v.begin(),v.end());
+                sety.insert(v);
+              }
+            }
+          }
+          mapy[nums[i]+nums[j]].push_back({i,j});
+        }
+      }
+      
+      for(auto k:sety)
+      {
+        out.push_back(k);
+      }
+      return out; 
+    }
+};
